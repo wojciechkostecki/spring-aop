@@ -5,6 +5,7 @@ import pl.javastart.model.Book;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 
 @Component
 public class BookRepository implements GenericRepository<String, Book> {
@@ -23,6 +24,7 @@ public class BookRepository implements GenericRepository<String, Book> {
                 .filter(b -> isbn.equals(b.getIsbn()))
                 .findFirst()
                 .get();
+        randomPause(300);
         return find;
     }
 
@@ -31,7 +33,16 @@ public class BookRepository implements GenericRepository<String, Book> {
         if(book == null || book.getIsbn() == null || book.getTitle() == null || book.getAuthor() == null){
             throw new IllegalArgumentException("Książka nie może miec pustych pól");
         }
+        randomPause(1000);
         books.add(book);
+    }
+
+    private void randomPause(int maxTime){
+        try{
+            Thread.sleep(new Random().nextInt(maxTime));
+        } catch (InterruptedException e){
+            e.printStackTrace();
+        }
     }
 }
 
